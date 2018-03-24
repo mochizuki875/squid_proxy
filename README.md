@@ -1,4 +1,9 @@
 # squidでProxyを立てる
+本手順ではdockerホスト上にコンテナとしてsquidを用いたproxyをデプロイする。  
+サービスポートはport=8080とする。  
+コンテナ起動時にコンテナ-dockerホスト間のポートルーティングを設定するため、  
+外部からproxyを利用する際はdockerホストIP(またはFQDN):8080を指定すればproxy経由のアクセスを実現できる。
+
 
 ## 事前準備
 ### ディレクトリ構成
@@ -149,12 +154,7 @@ services:
 ~~~
 
 
-
-
-
-
-
-## Dockerfileからデプロイする手順
+## [方法1]Dockerfileからデプロイする手順
 
 ### コンテナデプロイ
 ~~~
@@ -168,16 +168,11 @@ services:
 # docker exec -it proxy bash
 
 # systemctl start squid
-~~~
-
-### 動作確認
-自サーバから適当なインターネットサイトにproxy経由でアクセス
-~~~
-# curl -x 127.0.0.1:8080 https://www.yahoo.co.jp/
+# systemctl enable squid
 ~~~
 
 
-## docker-composeでデプロイする手順
+## [方法2]docker-composeでデプロイする手順
 ## 流れ
  - docker-composeでイメージビルド&コンテナ初回起動
  - コンテナ初期設定&イメージコミット
@@ -192,23 +187,16 @@ services:
 # docker-compose up -d --build
 ~~~
 
-→コンテナ内でうまくsquidを開始できない(faildになる)
-
-
 ## コンテナ初期設定&イメージコミット
-### コンテナ内での設定
+### コンテナ内でsquidを起動
 ~~~
 # docker exec -it squid_proxy_1 bash
 
 # systemctl start squid
 # systemctl enable squid
 
+# exit
 ~~~
-
-取り合えすここまででProxyとして動作する
-
-
-# 以下は、まだうまくいってない
 
 
 ## コンテナからイメージのコミット
@@ -223,8 +211,6 @@ services:
 # docker-compose rm
 ~~~
 
-コミットしたイメージからコンテナを起動するとsquidが起動に失敗する
-
 ### コンテナの起動
 ~~~
 # cd squid/proxy
@@ -232,8 +218,9 @@ services:
 ~~~
 
 
+## 動作確認
+自サーバから適当なインターネットサイトにproxy経由でアクセス
+~~~
+# curl -x 127.0.0.1:8080 https://www.yahoo.co.jp/
+~~~
 
-### ログの場所
-~~~
-/var/log/squid/access.log 
-~~~
