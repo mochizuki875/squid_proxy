@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  proxy:
+    build: ./proxy
+    ports:
+      - 8080:8080
+   # tty: true
+   # stdin_open: true
+    privileged: true
+   # command: /sbin/init
+   # command: systemctl start squid
