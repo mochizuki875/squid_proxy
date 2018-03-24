@@ -1,12 +1,6 @@
 # squidでProxyを立てる
-## 流れ
- - docker-composeでイメージビルド&コンテナ初回起動
- - コンテナ初期設定&イメージコミット
- - コンテナ再起動
 
-
-## docker-composeでイメージビルド&コンテナ初回起動
-
+## 事前準備
 ### ディレクトリ構成
 ~~~
 squid
@@ -18,12 +12,13 @@ squid
            -proxy_log
 ~~~
 
-### コンテナ初回起動
+### squidログ出力先の権限変更
 ~~~
-# cd squid
-# docker-compose up -d --build
+# chmod 755 squid/proxy/proxy_log
 ~~~
 
+
+## 資材
 ### squid/docker-compose.yml
 ~~~
 version: '2'
@@ -139,6 +134,67 @@ refresh_pattern -i (/cgi-bin/|\?) 0     0%      0
 refresh_pattern .               0       20%     4320
 ~~~
 
+### squid/proxy/docker-compose.yml
+~~~
+version: '2'
+
+services:
+  squid:
+    image: proxy:latest
+    ports:
+      - 8080:8080
+    privileged: true
+    volumes:
+      - /root/work/docker/squid/proxy/proxy_log:/var/log/squid/
+~~~
+
+
+
+
+
+
+
+## Dockerfileからデプロイする手順
+
+### コンテナデプロイ
+~~~
+# cd squid/proxy
+# docker build -t proxy:latest ./
+# docker run --privileged -d -p 8080:8080 -v /root/work/docker/squid/proxy/proxy_log:/var/log/squid/ --name proxy proxy:latest /sbin/init
+
+~~~
+### コンテナ内サービス起動
+~~~
+# docker exec -it proxy bash
+
+# systemctl start squid
+~~~
+
+### 動作確認
+自サーバから適当なインターネットサイトにproxy経由でアクセス
+~~~
+# curl -x 127.0.0.1:8080 https://www.yahoo.co.jp/
+~~~
+
+
+## docker-composeでデプロイする手順
+## 流れ
+ - docker-composeでイメージビルド&コンテナ初回起動
+ - コンテナ初期設定&イメージコミット
+ - コンテナ再起動
+
+
+## docker-composeでイメージビルド&コンテナ初回起動
+
+### コンテナ初回起動
+~~~
+# cd squid
+# docker-compose up -d --build
+~~~
+
+→コンテナ内でうまくsquidを開始できない(faildになる)
+
+
 ## コンテナ初期設定&イメージコミット
 ### コンテナ内での設定
 ~~~
@@ -175,19 +231,7 @@ refresh_pattern .               0       20%     4320
 # docker-compose up -d
 ~~~
 
-### squid/proxy/docker-compose.yml
-~~~
-version: '2'
 
-services:
-  squid:
-    image: proxy:latest
-    ports:
-      - 8080:8080
-    privileged: true
-    volumes:
-      - /root/work/docker/squid/proxy/proxy_log:/var/log/squid/
-~~~
 
 ### ログの場所
 ~~~
