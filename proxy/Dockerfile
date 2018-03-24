@@ -9,5 +9,4 @@ COPY ./squid.conf /etc/squid/squid.conf
 
 EXPOSE 8080
 
-# CMD /etc/init.d/squid start
 CMD /sbin/init

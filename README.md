@@ -1,27 +1,30 @@
 # squidでProxyを立てる
+## 流れ
+ - docker-composeでイメージビルド&コンテナ初回起動
+ - コンテナ初期設定&イメージコミット
+ - コンテナ再起動
 
-## dockerで検証
 
-### Dockerfile
+## docker-composeでイメージビルド&コンテナ初回起動
+
+### ディレクトリ構成
 ~~~
-FROM centos:7
-RUN su -
-RUN yum -y update
-RUN yum -y install squid
-
-RUN yum clean all
-
-EXPOSE 8080
-
-CMD /sbin/init
-~~~
-
-~~~
-# docker run -d --privileged -p 8080:8080 squid_proxy:latest 
+squid
+     -docker-compose.yml
+     -proxy
+           -Dockerfile
+           -squid.conf
+           -docker-compose.yml
+           -proxy_log
 ~~~
 
-### docker-compose.yml
-ハマり中
+### コンテナ初回起動
+~~~
+# cd squid
+# docker-compose up -d --build
+~~~
+
+### squid/docker-compose.yml
 ~~~
 version: '2'
 
@@ -30,14 +33,29 @@ services:
     build: ./proxy
     ports:
       - 8080:8080
-    # tty: true
-    # stdin_open: true
-    # privileged: true
-    # command: /sbin/init
-    # command: systemctl start squid
+    privileged: true
+    volumes:
+      - /root/work/docker/squid/proxy/proxy_log:/var/log/squid/
 ~~~
 
-### /etc/squid/squid.conf
+### squid/proxy/Dockerfile
+~~~
+FROM centos:7
+RUN su -
+RUN yum -y update
+RUN yum -y install squid
+
+RUN yum clean all
+
+COPY ./squid.conf /etc/squid/squid.conf
+
+EXPOSE 8080
+
+CMD /sbin/init
+~~~
+
+
+### squid/proxy/squid.conf
 ~~~
 #
 # Recommended minimum configuration:
@@ -119,6 +137,56 @@ refresh_pattern ^ftp:           1440    20%     10080
 refresh_pattern ^gopher:        1440    0%      1440
 refresh_pattern -i (/cgi-bin/|\?) 0     0%      0
 refresh_pattern .               0       20%     4320
+~~~
+
+## コンテナ初期設定&イメージコミット
+### コンテナ内での設定
+~~~
+# docker exec -it squid_proxy_1 bash
+
+# systemctl start squid
+# systemctl enable squid
+
+~~~
+
+取り合えすここまででProxyとして動作する
+
+
+# 以下は、まだうまくいってない
+
+
+## コンテナからイメージのコミット
+~~~
+# docker commit squid_proxy_1 proxy
+~~~ 
+
+### 旧コンテナの停止&削除
+~~~
+# cd squid
+# docker-compose stop
+# docker-compose rm
+~~~
+
+コミットしたイメージからコンテナを起動するとsquidが起動に失敗する
+
+### コンテナの起動
+~~~
+# cd squid/proxy
+# docker-compose up -d
+~~~
+
+### squid/proxy/docker-compose.yml
+~~~
+version: '2'
+
+services:
+  squid:
+    image: proxy:latest
+    ports:
+      - 8080:8080
+    privileged: true
+    volumes:
+      - /root/work/docker/squid/proxy/proxy_log:/var/log/squid/
 ~~~
 
 ### ログの場所
