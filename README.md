@@ -31,12 +31,12 @@ version: '2'
 
 services:
   proxy:
-    build: ./proxy
-
+    build:
+      context: ./proxy
       # Set Proxy
       # args:
       #   - HTTP_PROXY=${HTTP_PROXY}
-      #   - HTTPS__PROXY=${HTTPS_PROXY}
+      #   - HTTPS_PROXY=${HTTPS_PROXY}
 
     ports:
       - 8080:8080
