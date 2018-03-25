@@ -1,0 +1,56 @@
+2018/03/25 15:33:36 kid1| Set Current Directory to /var/spool/squid
+2018/03/25 15:33:36 kid1| Starting Squid Cache version 3.5.20 for x86_64-redhat-linux-gnu...
+2018/03/25 15:33:36 kid1| Service Name: squid
+2018/03/25 15:33:36 kid1| Process ID 85
+2018/03/25 15:33:36 kid1| Process Roles: worker
+2018/03/25 15:33:36 kid1| With 16384 file descriptors available
+2018/03/25 15:33:36 kid1| Initializing IP Cache...
+2018/03/25 15:33:36 kid1| DNS Socket created at [::], FD 6
+2018/03/25 15:33:36 kid1| DNS Socket created at 0.0.0.0, FD 8
+2018/03/25 15:33:36 kid1| Adding nameserver 127.0.0.11 from /etc/resolv.conf
+2018/03/25 15:33:36 kid1| Adding ndots 1 from /etc/resolv.conf
+2018/03/25 15:33:36 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2018/03/25 15:33:36 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2018/03/25 15:33:36 kid1| Local cache digest enabled; rebuild/rewrite every 3600/3600 sec
+2018/03/25 15:33:36 kid1| Store logging disabled
+2018/03/25 15:33:36 kid1| Swap maxSize 0 + 262144 KB, estimated 20164 objects
+2018/03/25 15:33:36 kid1| Target number of buckets: 1008
+2018/03/25 15:33:36 kid1| Using 8192 Store buckets
+2018/03/25 15:33:36 kid1| Max Mem  size: 262144 KB
+2018/03/25 15:33:36 kid1| Max Swap size: 0 KB
+2018/03/25 15:33:36 kid1| Using Least Load store dir selection
+2018/03/25 15:33:36 kid1| Set Current Directory to /var/spool/squid
+2018/03/25 15:33:36 kid1| Finished loading MIME types and icons.
+2018/03/25 15:33:36 kid1| HTCP Disabled.
+2018/03/25 15:33:36 kid1| Squid plugin modules loaded: 0
+2018/03/25 15:33:36 kid1| Adaptation support is off.
+2018/03/25 15:33:36 kid1| Accepting HTTP Socket connections at local=[::]:8080 remote=[::] FD 11 flags=9
+2018/03/25 15:33:37 kid1| storeLateRelease: released 0 objects
+2018/03/25 15:35:34 kid1| Set Current Directory to /var/spool/squid
+2018/03/25 15:35:34 kid1| Starting Squid Cache version 3.5.20 for x86_64-redhat-linux-gnu...
+2018/03/25 15:35:34 kid1| Service Name: squid
+2018/03/25 15:35:34 kid1| Process ID 57
+2018/03/25 15:35:34 kid1| Process Roles: worker
+2018/03/25 15:35:34 kid1| With 16384 file descriptors available
+2018/03/25 15:35:34 kid1| Initializing IP Cache...
+2018/03/25 15:35:34 kid1| DNS Socket created at [::], FD 6
+2018/03/25 15:35:34 kid1| DNS Socket created at 0.0.0.0, FD 8
+2018/03/25 15:35:34 kid1| Adding nameserver 127.0.0.11 from /etc/resolv.conf
+2018/03/25 15:35:34 kid1| Adding ndots 1 from /etc/resolv.conf
+2018/03/25 15:35:34 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2018/03/25 15:35:34 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2018/03/25 15:35:34 kid1| Local cache digest enabled; rebuild/rewrite every 3600/3600 sec
+2018/03/25 15:35:34 kid1| Store logging disabled
+2018/03/25 15:35:34 kid1| Swap maxSize 0 + 262144 KB, estimated 20164 objects
+2018/03/25 15:35:34 kid1| Target number of buckets: 1008
+2018/03/25 15:35:34 kid1| Using 8192 Store buckets
+2018/03/25 15:35:34 kid1| Max Mem  size: 262144 KB
+2018/03/25 15:35:34 kid1| Max Swap size: 0 KB
+2018/03/25 15:35:34 kid1| Using Least Load store dir selection
+2018/03/25 15:35:34 kid1| Set Current Directory to /var/spool/squid
+2018/03/25 15:35:34 kid1| Finished loading MIME types and icons.
+2018/03/25 15:35:34 kid1| HTCP Disabled.
+2018/03/25 15:35:34 kid1| Squid plugin modules loaded: 0
+2018/03/25 15:35:34 kid1| Adaptation support is off.
+2018/03/25 15:35:34 kid1| Accepting HTTP Socket connections at local=[::]:8080 remote=[::] FD 11 flags=9
+2018/03/25 15:35:35 kid1| storeLateRelease: released 0 objects
