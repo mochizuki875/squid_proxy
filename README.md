@@ -18,8 +18,9 @@ squid
 ~~~
 
 ### squidログ出力先の権限変更
+※権限についてはたぶんもっと打倒な値があるはずだけどここではフル権限を付ける
 ~~~
-# chmod 755 squid/proxy/proxy_log
+# chmod 777 squid/proxy/proxy_log
 ~~~
 
 
@@ -31,6 +32,12 @@ version: '2'
 services:
   proxy:
     build: ./proxy
+
+      # Set Proxy
+      # args:
+      #   - HTTP_PROXY=${HTTP_PROXY}
+      #   - HTTPS__PROXY=${HTTPS_PROXY}
+
     ports:
       - 8080:8080
     privileged: true
@@ -42,6 +49,11 @@ services:
 ~~~
 FROM centos:7
 RUN su -
+
+# Set Proxy
+# ARG HTTP_PROXY
+# ARG HTTPS_PROXY
+
 RUN yum -y update
 RUN yum -y install squid
 
@@ -218,7 +230,7 @@ services:
 ~~~
 
 
-# 動作確認
+## 動作確認
 自サーバから適当なインターネットサイトにproxy経由でアクセス
 ~~~
 # curl -x 127.0.0.1:8080 https://www.yahoo.co.jp/
